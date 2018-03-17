@@ -260,7 +260,7 @@ def vmemory(args):
         with os.popen("cat /proc/" + _pid + "/status | grep VmSize | colrm 1 8 | colrm 10 26 | sed -e 's/\s*//'") as pipe:
             vmem = pipe.read().strip()
         pipe.close()
-        if not 'threads' in locals():
+        if not 'vmem' in locals():
             vmem = "0"
         print(int(vmem.strip()) * 1024)
 
