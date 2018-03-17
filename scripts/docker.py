@@ -229,20 +229,40 @@ def memory(args):
     memory_usage_last = single_stat_update(args, container_dir, "memory.usage_in_bytes")
     print(memory_usage_last.strip())
 
-def threads(args):
+def pid(args):
     with os.popen("docker inspect -f '{{.State.Pid}}' " + args.container + " 2>&1") as pipe:
         pid = pipe.read().strip()
     pipe.close()
     # test that the docker command succeeded and pipe contained data
     if "Error: No such object:" in pid:
-        print("0")
+        return "ERR"
     else:
-        with os.popen("cat /proc/" + pid + "/status | grep Threads | colrm 1 8 | sed -e 's/\s*//'") as pipe:
+        return pid
+
+
+def threads(args):
+    _pid = pid(args)
+    if _pid == "ERR":
+        print(0)
+    else:
+        with os.popen("cat /proc/" + _pid + "/status | grep Threads | colrm 1 8 | sed -e 's/\s*//'") as pipe:
             threads = pipe.read().strip()
         pipe.close()
         if not 'threads' in locals():
             threads = "0"
         print(threads.strip())
+
+def vmemory(args):
+    _pid = pid(args)
+    if _pid == "ERR":
+        print(0)
+    else:
+        with os.popen("cat /proc/" + _pid + "/status | grep VmSize | colrm 1 8 | colrm 10 26 | sed -e 's/\s*//'") as pipe:
+            vmem = pipe.read().strip()
+        pipe.close()
+        if not 'threads' in locals():
+            vmem = "0"
+        print(int(vmem.strip()) * 1024)
 
 def debug(output):
     if _DEBUG:
@@ -261,7 +281,7 @@ if __name__ == "__main__":
                                          description="discover and get stats from docker containers")
         parser.add_argument("container", help="container id")
         parser.add_argument("stat", help="container stat",
-                            choices=["status", "uptime", "cpu", "mem", "disk", "netin", "netout", "threads"])
+                            choices=["status", "uptime", "cpu", "mem", "disk", "netin", "netout", "threads", "vmem"])
         args = parser.parse_args()
         # validate the parameter for container
         m = re.match("(^[a-zA-Z0-9-_]+$)", args.container)
@@ -295,6 +315,9 @@ if __name__ == "__main__":
         elif args.stat == "threads":
             debug("calling threads for " + args.container)
             threads(args)
+        elif args.stat == "vmem":
+            debug("calling vmemory for " + args.container)
+            vmemory(args)
     elif len(sys.argv) == 2:
         if sys.argv[1] == "count":
             debug("calling count")

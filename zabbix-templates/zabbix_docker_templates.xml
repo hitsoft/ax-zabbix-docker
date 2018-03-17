@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>3.2</version>
+    <version>3.0</version>
     <date>2017-08-08T11:53:55Z</date>
     <groups>
         <group>
-            <name>Templates</name>
+            <name>Templates Custom</name>
         </group>
     </groups>
     <templates>
@@ -14,7 +14,7 @@
             <description>simple docker monitoring, https://github.com/dimuskin/ax-zabbix-docker</description>
             <groups>
                 <group>
-                    <name>Templates</name>
+                    <name>Templates Custom</name>
                 </group>
             </groups>
             <applications>
@@ -186,7 +186,6 @@
                                 </application>
                             </applications>
                             <valuemap>
-                                <name>AX Docker container state</name>
                             </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
@@ -232,7 +231,51 @@
                                 </application>
                             </applications>
                             <valuemap>
-                                <name>AX Docker container threads count</name>
+                            </valuemap>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Container {#CONTAINERNAME} vmemory usage:</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>docker.containers[{#CONTAINERNAME}, vmem]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units>B</units>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Docker Containers</name>
+                                </application>
+                            </applications>
+                            <valuemap>
                             </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
@@ -241,58 +284,49 @@
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template AX App Docker ACTIVE:docker.containers[{#CONTAINERNAME}, cpu].avg(15m)}&gt;90</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME} on {HOST.NAME} CPU usage is too high</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template AX App Docker ACTIVE:docker.containers[{#CONTAINERNAME}, threads].avg(15m)}&gt;15000</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME} on {HOST.NAME} threads count is too high</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template AX App Docker ACTIVE:docker.containers[{#CONTAINERNAME}, vmem].avg(15m)}&gt;25769803776</expression>
+                            <name>Container {#CONTAINERNAME} on {HOST.NAME} VMEM usage is too high</name>
+                            <url/>
+                            <status>0</status>
+                            <priority>3</priority>
+                            <description/>
+                            <type>0</type>
+                            <dependencies/>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template AX App Docker ACTIVE:docker.containers[{#CONTAINERNAME}, status].max(#3)}&lt;10</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME}  on {HOST.NAME} not running</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
                         </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
-            <httptests/>
             <macros/>
             <templates/>
             <screens/>
@@ -303,7 +337,7 @@
             <description>simple docker monitoring, https://github.com/dimuskin/ax-zabbix-docker</description>
             <groups>
                 <group>
-                    <name>Templates</name>
+                    <name>Templates Custom</name>
                 </group>
             </groups>
             <applications>
@@ -475,7 +509,6 @@
                                 </application>
                             </applications>
                             <valuemap>
-                                <name>AX Docker container state</name>
                             </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
@@ -521,7 +554,51 @@
                                 </application>
                             </applications>
                             <valuemap>
-                                <name>AX Docker container threads count</name>
+                            </valuemap>
+                            <logtimefmt/>
+                            <application_prototypes/>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Container {#CONTAINERNAME} vmemory usage:</name>
+                            <type>7</type>
+                            <snmp_community/>
+                            <multiplier>0</multiplier>
+                            <snmp_oid/>
+                            <key>docker.containers[{#CONTAINERNAME}, vmem]</key>
+                            <delay>60</delay>
+                            <history>7</history>
+                            <trends>365</trends>
+                            <status>0</status>
+                            <value_type>3</value_type>
+                            <allowed_hosts/>
+                            <units>B</units>
+                            <delta>0</delta>
+                            <snmpv3_contextname/>
+                            <snmpv3_securityname/>
+                            <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                            <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                            <snmpv3_authpassphrase/>
+                            <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                            <snmpv3_privpassphrase/>
+                            <formula>1</formula>
+                            <delay_flex/>
+                            <params/>
+                            <ipmi_sensor/>
+                            <data_type>0</data_type>
+                            <authtype>0</authtype>
+                            <username/>
+                            <password/>
+                            <publickey/>
+                            <privatekey/>
+                            <port/>
+                            <description/>
+                            <inventory_link>0</inventory_link>
+                            <applications>
+                                <application>
+                                    <name>Docker Containers</name>
+                                </application>
+                            </applications>
+                            <valuemap>
                             </valuemap>
                             <logtimefmt/>
                             <application_prototypes/>
@@ -530,58 +607,49 @@
                     <trigger_prototypes>
                         <trigger_prototype>
                             <expression>{Template AX App Docker PASSIVE:docker.containers[{#CONTAINERNAME}, cpu].avg(15m)}&gt;90</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME} on {HOST.NAME} CPU usage is too high</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template AX App Docker PASSIVE:docker.containers[{#CONTAINERNAME}, threads].avg(15m)}&gt;15000</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME} on {HOST.NAME} threads count is too high</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Template AX App Docker PASSIVE:docker.containers[{#CONTAINERNAME}, vmem].avg(15m)}&gt;25769803776</expression>
+                            <name>Container {#CONTAINERNAME} on {HOST.NAME} VMEM usage is too high</name>
+                            <url/>
+                            <status>0</status>
+                            <priority>3</priority>
+                            <description/>
+                            <type>0</type>
+                            <dependencies/>
                         </trigger_prototype>
                         <trigger_prototype>
                             <expression>{Template AX App Docker PASSIVE:docker.containers[{#CONTAINERNAME}, status].max(#3)}&lt;10</expression>
-                            <recovery_mode>0</recovery_mode>
-                            <recovery_expression/>
                             <name>Container {#CONTAINERNAME}  on {HOST.NAME} not running</name>
-                            <correlation_mode>0</correlation_mode>
-                            <correlation_tag/>
                             <url/>
                             <status>0</status>
                             <priority>3</priority>
                             <description/>
                             <type>0</type>
-                            <manual_close>0</manual_close>
                             <dependencies/>
-                            <tags/>
                         </trigger_prototype>
                     </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
                 </discovery_rule>
             </discovery_rules>
-            <httptests/>
             <macros/>
             <templates/>
             <screens/>
