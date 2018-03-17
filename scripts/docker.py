@@ -17,7 +17,7 @@ _DEBUG = os.getenv("DEBUG", False)
 # discover containers
 def discover():
     d = {"data": []}
-    with os.popen("docker ps -a --format \"{{.Names}} {{.ID}}\"") as pipe:
+    with os.popen("docker ps --format \"{{.Names}} {{.ID}}\"") as pipe:
         for line in pipe:
             ps = {
                 "{#CONTAINERNAME}": line.strip().split()[0],
