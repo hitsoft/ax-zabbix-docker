@@ -281,7 +281,7 @@ if __name__ == "__main__":
                                          description="discover and get stats from docker containers")
         parser.add_argument("container", help="container id")
         parser.add_argument("stat", help="container stat",
-                            choices=["status", "uptime", "cpu", "mem", "disk", "netin", "netout", "threads", "vmem"])
+                            choices=["status", "uptime", "cpu", "mem", "disk", "netin", "netout", "threads", "vmem", "pid"])
         args = parser.parse_args()
         # validate the parameter for container
         m = re.match("(^[a-zA-Z0-9-_]+$)", args.container)
@@ -318,6 +318,9 @@ if __name__ == "__main__":
         elif args.stat == "vmem":
             debug("calling vmemory for " + args.container)
             vmemory(args)
+        elif args.stat == "pid":
+            debug("calling pid for " + args.container)
+            print(pid(args))
     elif len(sys.argv) == 2:
         if sys.argv[1] == "count":
             debug("calling count")
